@@ -11,5 +11,7 @@ abstract class Controller
         "M_Menu_Group" => "3",
         "M_Menu_Group_Detail" => "4",
         "M_User" => "5",
+        "M_Unit" => "6",
+        "M_Sensor" => "7",
     ];
 }

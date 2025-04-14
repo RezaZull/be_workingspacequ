@@ -5,6 +5,8 @@ use App\Http\Controllers\MMenuController;
 use App\Http\Controllers\MMenuGroupController;
 use App\Http\Controllers\MMenuGroupDetailController;
 use App\Http\Controllers\MRoleController;
+use App\Http\Controllers\MSensorController;
+use App\Http\Controllers\MUnitController;
 use App\Http\Controllers\MUserController;
 use App\Http\Middleware\JwtMiddleware;
 use Illuminate\Http\Request;
@@ -25,6 +27,8 @@ Route::middleware([JwtMiddleware::class])->group(function () {
         'mUser' => MUserController::class,
         'mMenu' => MMenuController::class,
         'mRole' => MRoleController::class,
+        'mSensor' => MSensorController::class,
+        'mUnit' => MUnitController::class,
         'mMenuGroup' => MMenuGroupController::class,
         'mMenuGroupDetail' => MMenuGroupDetailController::class,
         'appSetting' => AppSettingController::class,

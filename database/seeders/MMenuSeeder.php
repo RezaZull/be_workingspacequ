@@ -69,6 +69,24 @@ class MMenuSeeder extends Seeder
                 'flag_active' => true,
                 'created_at' => Carbon::now()
             ],
+            [
+                'name' => "Sensor",
+                'route' => "sensor",
+                'description' => "master sensor",
+                'obj_type' => '1',
+                'created_by' => "SYSTEM",
+                'flag_active' => true,
+                'created_at' => Carbon::now()
+            ],
+            [
+                'name' => "Unit",
+                'route' => "unit",
+                'description' => "master unit",
+                'obj_type' => '1',
+                'created_by' => "SYSTEM",
+                'flag_active' => true,
+                'created_at' => Carbon::now()
+            ]
         ]);
     }
 }
