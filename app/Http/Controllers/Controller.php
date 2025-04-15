@@ -13,5 +13,8 @@ abstract class Controller
         "M_User" => "5",
         "M_Unit" => "6",
         "M_Sensor" => "7",
+        "M_Room" => "8",
+        "M_Room_Type" => "9",
+        "M_Room_Sensor" => "10",
     ];
 }

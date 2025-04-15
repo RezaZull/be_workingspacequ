@@ -5,6 +5,9 @@ use App\Http\Controllers\MMenuController;
 use App\Http\Controllers\MMenuGroupController;
 use App\Http\Controllers\MMenuGroupDetailController;
 use App\Http\Controllers\MRoleController;
+use App\Http\Controllers\MRoomController;
+use App\Http\Controllers\MRoomSensorController;
+use App\Http\Controllers\MRoomTypeController;
 use App\Http\Controllers\MSensorController;
 use App\Http\Controllers\MUnitController;
 use App\Http\Controllers\MUserController;
@@ -29,6 +32,9 @@ Route::middleware([JwtMiddleware::class])->group(function () {
         'mRole' => MRoleController::class,
         'mSensor' => MSensorController::class,
         'mUnit' => MUnitController::class,
+        'mRoom' => MRoomController::class,
+        'mRoomType' => MRoomTypeController::class,
+        'mRoomSensor' => MRoomSensorController::class,
         'mMenuGroup' => MMenuGroupController::class,
         'mMenuGroupDetail' => MMenuGroupDetailController::class,
         'appSetting' => AppSettingController::class,
