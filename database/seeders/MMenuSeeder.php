@@ -15,7 +15,7 @@ class MMenuSeeder extends Seeder
     public function run(): void
     {
         MMenu::insert([
-            [
+            [//1
                 'name' => "Dashboard",
                 'route' => "dashboard",
                 'description' => "Dashboard User",
@@ -24,7 +24,7 @@ class MMenuSeeder extends Seeder
                 'flag_active' => true,
                 'created_at' => Carbon::now()
             ],
-            [
+            [//2
                 'name' => "Master Menu",
                 'route' => "mastermenu",
                 'description' => "Master Menu",
@@ -33,7 +33,7 @@ class MMenuSeeder extends Seeder
                 'flag_active' => true,
                 'created_at' => Carbon::now()
             ],
-            [
+            [//3
                 'name' => "Master User",
                 'route' => "masteruser",
                 'description' => "Master User",
@@ -42,7 +42,7 @@ class MMenuSeeder extends Seeder
                 'flag_active' => true,
                 'created_at' => Carbon::now()
             ],
-            [
+            [//4
                 'name' => "Master Role",
                 'route' => "masterrole",
                 'description' => "Master Role User",
@@ -51,7 +51,7 @@ class MMenuSeeder extends Seeder
                 'flag_active' => true,
                 'created_at' => Carbon::now()
             ],
-            [
+            [//5
                 'name' => "Master Menu Group",
                 'route' => "mastermenugroup",
                 'description' => "Master Menu group",
@@ -60,7 +60,7 @@ class MMenuSeeder extends Seeder
                 'flag_active' => true,
                 'created_at' => Carbon::now()
             ],
-            [
+            [//6
                 'name' => "APP Setting",
                 'route' => "appsetting",
                 'description' => "App Setting",
@@ -69,7 +69,7 @@ class MMenuSeeder extends Seeder
                 'flag_active' => true,
                 'created_at' => Carbon::now()
             ],
-            [
+            [//7
                 'name' => "Sensor",
                 'route' => "sensor",
                 'description' => "master sensor",
@@ -78,7 +78,7 @@ class MMenuSeeder extends Seeder
                 'flag_active' => true,
                 'created_at' => Carbon::now()
             ],
-            [
+            [//8
                 'name' => "Unit",
                 'route' => "unit",
                 'description' => "master unit",
@@ -86,7 +86,25 @@ class MMenuSeeder extends Seeder
                 'created_by' => "SYSTEM",
                 'flag_active' => true,
                 'created_at' => Carbon::now()
-            ]
+            ],
+            [//9
+                'name' => "Room",
+                'route' => "room",
+                'description' => "master room",
+                'obj_type' => '1',
+                'created_by' => "SYSTEM",
+                'flag_active' => true,
+                'created_at' => Carbon::now()
+            ],
+            [//10
+                'name' => "Room Type",
+                'route' => "roomType",
+                'description' => "master room type",
+                'obj_type' => '1',
+                'created_by' => "SYSTEM",
+                'flag_active' => true,
+                'created_at' => Carbon::now()
+            ],
         ]);
     }
 }

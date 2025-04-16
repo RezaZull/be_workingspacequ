@@ -21,7 +21,7 @@ class MRoomSensorController extends Controller
         $orderDir = $request->query('orderDir');
 
         $pagination = $request->query('pagination');
-        $MRoomSensor = MRoomSensor::with(['room', 'sensor']);
+        $MRoomSensor = MRoomSensor::with('sensor.unit');
         if (isset($searchParam) && isset($searchValue)) {
             $MRoomSensor = $MRoomSensor->where($searchParam, 'LIKE', "%$searchValue%");
         }

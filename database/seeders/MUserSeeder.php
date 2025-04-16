@@ -21,7 +21,7 @@ class MUserSeeder extends Seeder
                 'username' => 'admin',
                 'email' => 'admin',
                 'password' => Hash::make('admin'),
-                'id_m_roles' => rand(1, 2),
+                'id_m_roles' => 1,
                 'obj_type' => 5,
                 'created_by' => "SYSTEM",
                 'img_path' => "storage/images/profile/images.webp",

@@ -76,7 +76,7 @@ class MRoomController extends Controller
      */
     public function show(MRoom $mRoom)
     {
-        return ResponsHelper::successGetData($mRoom);
+        return ResponsHelper::successGetData($mRoom->load('roomType'));
     }
 
     /**
