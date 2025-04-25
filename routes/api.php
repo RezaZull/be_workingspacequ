@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AppSettingController;
+use App\Http\Controllers\HRoomPriceController;
 use App\Http\Controllers\MMenuController;
 use App\Http\Controllers\MMenuGroupController;
 use App\Http\Controllers\MMenuGroupDetailController;
@@ -33,6 +34,7 @@ Route::middleware([JwtMiddleware::class])->group(function () {
         'mSensor' => MSensorController::class,
         'mUnit' => MUnitController::class,
         'mRoom' => MRoomController::class,
+        'hRoomPrice' => HRoomPriceController::class,
         'mRoomType' => MRoomTypeController::class,
         'mRoomSensor' => MRoomSensorController::class,
         'mMenuGroup' => MMenuGroupController::class,

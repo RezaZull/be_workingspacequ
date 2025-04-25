@@ -16,5 +16,6 @@ abstract class Controller
         "M_Room" => "8",
         "M_Room_Type" => "9",
         "M_Room_Sensor" => "10",
+        "H_Room_Price" => "10",
     ];
 }

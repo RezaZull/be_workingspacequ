@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helper\ResponsHelper;
+use App\Models\HRoomPrice;
 use App\Models\MRoom;
 use DB;
 use Illuminate\Http\Request;
@@ -57,10 +58,19 @@ class MRoomController extends Controller
                 'id_m_room_type' => $request->id_m_room_type,
                 'price' => $request->price,
                 'current_capacity' => $request->current_capacity,
-                'flag_active' => $request->flag_active,
                 'obj_type' => $this->objTypes["M_Room"],
+                'flag_active' => $request->flag_active,
                 'created_by' => $request->user_id,
             ]);
+            $mRoomHistory = HRoomPrice::create(
+                [
+                    'id_m_room' => $mRoom->id,
+                    'price' => $mRoom->price,
+                    'obj_type' => $this->objTypes["H_Room_Price"],
+                    'flag_active' => $request->flag_active,
+                    'created_by' => $request->user_id,
+                ]
+            );
             DB::commit();
         } catch (\Throwable $th) {
             DB::rollBack();
