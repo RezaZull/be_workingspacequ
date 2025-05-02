@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helper\ResponsHelper;
 use App\Models\HRoomPrice;
 use App\Models\MRoom;
+use App\Models\MRoomType;
 use DB;
 use Illuminate\Http\Request;
 use Validator;
@@ -48,6 +49,11 @@ class HRoomPriceController extends Controller
         if ($validator->fails()) {
             return ResponsHelper::validatorError($validator->errors());
         }
+        $mRoom = MRoom::findOrFail($request->id_m_room);
+        $roomType = MRoomType::findOrFail($mRoom->id_m_room_type);
+        if ($request->price > $roomType->max_price || $request->price < $roomType->low_price) {
+            return ResponsHelper::validatorError(["price" => ["Price not match in room type"]]);
+        }
         DB::beginTransaction();
         try {
             $hRoomPrice = HRoomPrice::create([
@@ -57,7 +63,7 @@ class HRoomPriceController extends Controller
                 'obj_type' => $this->objTypes["H_Room_Price"],
                 'flag_active' => true,
             ]);
-            $mRoom = MRoom::findOrFail($request->id_m_room)->updateOrFail([
+            $mRoom->updateOrFail([
                 'price' => $request->price,
                 'updated_by' => $request->user_id,
             ]);
