@@ -20,7 +20,7 @@ class MqttSubscribe extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Listening MQTT Subscribe and update data';
 
     /**
      * Execute the console command.

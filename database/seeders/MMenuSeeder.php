@@ -105,6 +105,42 @@ class MMenuSeeder extends Seeder
                 'flag_active' => true,
                 'created_at' => Carbon::now()
             ],
+            [//11
+                'name' => "Product List",
+                'route' => "productlist",
+                'description' => "Cart",
+                'obj_type' => '1',
+                'created_by' => "SYSTEM",
+                'flag_active' => true,
+                'created_at' => Carbon::now()
+            ],
+            [//12
+                'name' => "Cart",
+                'route' => "cart",
+                'description' => "Cart",
+                'obj_type' => '1',
+                'created_by' => "SYSTEM",
+                'flag_active' => true,
+                'created_at' => Carbon::now()
+            ],
+            [//13
+                'name' => "Booking",
+                'route' => "booking",
+                'description' => "Booking",
+                'obj_type' => '1',
+                'created_by' => "SYSTEM",
+                'flag_active' => true,
+                'created_at' => Carbon::now()
+            ],
+            [//14
+                'name' => "Feedback",
+                'route' => "feedback",
+                'description' => "Feedback",
+                'obj_type' => '1',
+                'created_by' => "SYSTEM",
+                'flag_active' => true,
+                'created_at' => Carbon::now()
+            ],
         ]);
     }
 }

@@ -18,7 +18,11 @@ class MMenuGroupDetailSeeder extends Seeder
             'dashboard' => [1],
             'userRolePermission' => [2, 3, 4, 5, 6],
             'masterSensor' => [7, 8],
-            'masterRoom' => [9, 10]
+            'masterRoom' => [9, 10],
+            'productList' => [11],
+            'cart' => [12],
+            'booking' => [13],
+            'feedback' => [14]
         ];
         $keysDataMenuList = array_keys($dataMenuList);
         $GrupDetailCreate = [];

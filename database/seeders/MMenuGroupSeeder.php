@@ -46,6 +46,30 @@ class MMenuGroupSeeder extends Seeder
                 'created_by' => "SYSTEM",
                 'created_at' => Carbon::now()
             ],
+            [//4
+                'id_m_roles' => 1,
+                'name' => "Product List",
+                'obj_type' => '3',
+                'flag_active' => true,
+                'created_by' => "SYSTEM",
+                'created_at' => Carbon::now()
+            ],
+            [//5
+                'id_m_roles' => 1,
+                'name' => "Cart",
+                'obj_type' => '3',
+                'flag_active' => true,
+                'created_by' => "SYSTEM",
+                'created_at' => Carbon::now()
+            ],
+            [//6
+                'id_m_roles' => 1,
+                'name' => "Booking",
+                'obj_type' => '3',
+                'flag_active' => true,
+                'created_by' => "SYSTEM",
+                'created_at' => Carbon::now()
+            ],
         ]);
     }
 }

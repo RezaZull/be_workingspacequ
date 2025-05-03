@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AppSettingController;
 use App\Http\Controllers\HRoomPriceController;
+use App\Http\Controllers\MFeedbackController;
 use App\Http\Controllers\MMenuController;
 use App\Http\Controllers\MMenuGroupController;
 use App\Http\Controllers\MMenuGroupDetailController;
@@ -12,6 +13,9 @@ use App\Http\Controllers\MRoomTypeController;
 use App\Http\Controllers\MSensorController;
 use App\Http\Controllers\MUnitController;
 use App\Http\Controllers\MUserController;
+use App\Http\Controllers\TBookingController;
+use App\Http\Controllers\TBookingLineController;
+use App\Http\Controllers\TCartLineController;
 use App\Http\Middleware\JwtMiddleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -40,5 +44,9 @@ Route::middleware([JwtMiddleware::class])->group(function () {
         'mMenuGroup' => MMenuGroupController::class,
         'mMenuGroupDetail' => MMenuGroupDetailController::class,
         'appSetting' => AppSettingController::class,
+        'tBooking' => TBookingController::class,
+        'tBookingLine' => TBookingLineController::class,
+        'tCartLine' => TCartLineController::class,
+        'mFeedback' => MFeedbackController::class
     ]);
 });
