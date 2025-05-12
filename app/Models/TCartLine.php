@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class TCartLine extends Model
@@ -12,6 +13,8 @@ class TCartLine extends Model
         "id_m_user",
         "id_m_room",
         "status",
+        "flag_chekced",
+        "date_chekin",
         'obj_type',
         'created_by',
         'updated_by',
@@ -27,4 +30,9 @@ class TCartLine extends Model
         "updated_by",
         "deleted_by",
     ];
+
+    public function room(): HasOne
+    {
+        return $this->hasOne(MRoom::class, 'id', 'id_m_room');
+    }
 }

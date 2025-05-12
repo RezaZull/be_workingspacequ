@@ -30,7 +30,9 @@ Route::middleware([JwtMiddleware::class])->group(function () {
     Route::post("/logout", [MUserController::class, "logout"])->name("logout");
     Route::post("/mUser/uploadPicture/{mUser}", [MUserController::class, "uploadPicture"])->name("mUser.uploadPicture");
     Route::post("/mUser/changePassword/{mUser}", [MUserController::class, "changePassword"])->name("mUser.changePassword");
+    Route::post("/tBookingBulk/createBooking", [TBookingController::class, "createBooking"])->name("tBooking.createBooking");
     Route::put("/appSettingBulk/update", [AppSettingController::class, "bulkUpdate"])->name("appSetting.bulkUpdate");
+    Route::put("/tCartLineBulk/update", [TCartLineController::class, "bulkUpdate"])->name("tCartLine.bulkUpdate");
     Route::apiResources([
         'mUser' => MUserController::class,
         'mMenu' => MMenuController::class,

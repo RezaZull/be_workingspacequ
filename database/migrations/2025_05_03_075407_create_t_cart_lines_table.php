@@ -15,6 +15,8 @@ return new class extends Migration {
             $table->unsignedBigInteger('id_m_user');
             $table->unsignedBigInteger('id_m_room');
             $table->enum('status', ['active', 'complete']);
+            $table->boolean("flag_chekced")->default(false);
+            $table->date('date_chekin')->nullable();
             $table->string("obj_type");
             $table->boolean("flag_active");
             $table->timestamps();

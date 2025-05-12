@@ -35,7 +35,6 @@ class MqttSubscribe extends Command
                     'value' => $dataRoomSensor['value'],
                     'updated_by' => 'IOT Devices'
                 ]);
-
             }
             echo "Successfully Update data";
         });

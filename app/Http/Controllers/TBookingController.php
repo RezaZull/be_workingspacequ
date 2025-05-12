@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Helper\ResponsHelper;
+use App\Models\MRoom;
 use App\Models\TBooking;
+use App\Models\TBookingLine;
+use App\Models\TCartLine;
+use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;
 use Validator;
@@ -69,6 +73,60 @@ class TBookingController extends Controller
         }
     }
 
+    public function createBooking(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'data.*id' => 'required|exists:t_cart_lines,id',
+            'data.*id_m_room' => 'required|exists:m_rooms,id',
+            'data.*date_checkin' => 'required',
+            'user_id' => 'required|exists:m_users,id'
+        ]);
+        if ($validator->fails()) {
+            return ResponsHelper::validatorError($validator->errors());
+        }
+        DB::beginTransaction();
+        try {
+            $tBooking = TBooking::create([
+                'id_m_user' => $request->user_id,
+                'grand_total' => 0,
+                'date_book' => Carbon::now(),
+                'payment_status' => 'pending',
+                'flag_active' => true,
+                'obj_type' => $this->objTypes["T_Booking"],
+                'created_by' => $request->user_id,
+            ]);
+            $BookingLineData = [];
+            $grandTotal = 0;
+            foreach ($request->all() as $data) {
+                $dataRoom = MRoom::find($data->id_m_room);
+                $grandTotal += $dataRoom->price;
+                $BookingLineData[] = [
+                    'id_t_booking' => $tBooking->id,
+                    'id_m_room' => $data->id_m_room,
+                    'date_cheking' => $data->date_cheking,
+                    'book_code' => "",
+                    'flag_active' => true,
+                    'obj_type' => $this->objTypes["T_Booking_Line"],
+                    'created_by' => $request->user_id,
+                    'created_at' => Carbon::now(),
+                ];
+                $updateData = TCartLine::find($data['id'])->update([
+                    'status' => 'complete',
+                    'updated_by' => $request->user_id,
+                ]);
+            }
+            $tBookingLine = TBookingLine::insert($BookingLineData);
+            $tBooking->update([
+                'grand_total' => $grandTotal
+            ]);
+
+            DB::commit();
+            return ResponsHelper::successChangeData($tBookingLine, "Success create Data");
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return ResponsHelper::conflictError(409, "Conflict error");
+        }
+    }
     /**
      * Display the specified resource.
      */

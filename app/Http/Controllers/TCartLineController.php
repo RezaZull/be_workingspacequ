@@ -21,7 +21,7 @@ class TCartLineController extends Controller
         $orderDir = $request->query('orderDir');
 
         $pagination = $request->query('pagination');
-        $TCartLine = new TCartLine();
+        $TCartLine = TCartLine::with('room.roomType');
         if (isset($searchParam) && isset($searchValue)) {
             $TCartLine = $TCartLine->where($searchParam, 'LIKE', "%$searchValue%");
         }
@@ -39,7 +39,7 @@ class TCartLineController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'id_m_room' => 'required|exists:id_m_rooms,id',
+            'id_m_room' => 'required|exists:m_rooms,id',
             'flag_active' => 'required',
             'user_id' => 'required|exists:m_users,id'
         ]);
@@ -84,6 +84,8 @@ class TCartLineController extends Controller
             'id_m_room' => 'required|exists:id_m_rooms,id',
             'flag_active' => 'required',
             'status' => 'required',
+            'flag_chekced' => 'required',
+            'date_chekin' => 'nullable',
             'user_id' => 'required|exists:m_users,id'
         ]);
 
@@ -96,8 +98,9 @@ class TCartLineController extends Controller
                 'id_m_user' => $request->user_id,
                 'id_m_room' => $request->id_m_room,
                 'status' => $request->status,
+                'flag_chekced' => $request->flag_chekced,
+                'date_chekin' => $request->date_chekin,
                 'flag_active' => $request->flag_active,
-                'obj_type' => $this->objTypes["T_Cart_Line"],
                 'updated_by' => $request->user_id,
             ]);
             DB::commit();
@@ -108,6 +111,40 @@ class TCartLineController extends Controller
         if ($tCartLine) {
             return ResponsHelper::successChangeData($tCartLine, "Success update data");
         }
+    }
+
+    public function bulkUpdate(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'data.*.id' => 'required',
+            'data.*status' => 'required',
+            'data.*flag_chekced' => 'required',
+            'data.*date_chekin' => 'nullable',
+            'user_id' => 'required|exists:m_users,id'
+        ]);
+
+        if ($validator->fails()) {
+            return ResponsHelper::validatorError($validator->errors());
+        }
+
+        DB::beginTransaction();
+        try {
+            foreach ($request->data as $dataUpdate) {
+                $updateData = TCartLine::find($dataUpdate['id'])->update([
+                    'status' => $dataUpdate['status'],
+                    'flag_chekced' => $dataUpdate['flag_chekced'],
+                    'date_chekin' => $dataUpdate['date_chekin'],
+                    'updated_by' => $request->user_id,
+                ]);
+            }
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            dd($th);
+            return ResponsHelper::conflictError(409, "Conflict error");
+        }
+        return ResponsHelper::successChangeData("", "Success update data");
+
     }
 
     /**
