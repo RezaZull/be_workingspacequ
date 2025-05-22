@@ -3,24 +3,21 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class TCartLine extends Model
+class MRoomImage extends Model
 {
     use SoftDeletes;
     protected $fillable = [
-        "id_m_user",
-        "id_m_room",
-        "status",
-        "flag_chekced",
-        "date_checkin",
+        'img_path',
+        'id_m_room',
         'obj_type',
         'created_by',
         'updated_by',
         'deleted_by',
         'flag_active'
     ];
+
     protected $hidden = [
         "obj_type",
         "created_at",
@@ -30,9 +27,4 @@ class TCartLine extends Model
         "updated_by",
         "deleted_by",
     ];
-
-    public function room(): HasOne
-    {
-        return $this->hasOne(MRoom::class, 'id', 'id_m_room');
-    }
 }

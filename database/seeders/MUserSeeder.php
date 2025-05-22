@@ -19,7 +19,7 @@ class MUserSeeder extends Seeder
                 'first_name' => 'admin',
                 'last_name' => 'galang',
                 'username' => 'admin',
-                'email' => 'admin',
+                'email' => 'admin@galang.com',
                 'password' => Hash::make('admin'),
                 'id_m_roles' => 1,
                 'obj_type' => 5,

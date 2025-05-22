@@ -15,7 +15,8 @@ return new class extends Migration {
             $table->unsignedBigInteger('id_m_user');
             $table->timestamp('date_book');
             $table->decimal('grandtotal', 12, 2);
-            $table->enum('payment_status', ["pending", "settlement", "deny", "cancel", "expire", "failure"]);
+            $table->enum('payment_status', ["pending", "success", "cancel", "failure"]);
+            $table->string("order_id");
 
             $table->string("obj_type");
             $table->boolean("flag_active");

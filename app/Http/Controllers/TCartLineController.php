@@ -21,7 +21,7 @@ class TCartLineController extends Controller
         $orderDir = $request->query('orderDir');
 
         $pagination = $request->query('pagination');
-        $TCartLine = TCartLine::with('room.roomType');
+        $TCartLine = TCartLine::with('room.roomType')->where('status', '=', 'active');
         if (isset($searchParam) && isset($searchValue)) {
             $TCartLine = $TCartLine->where($searchParam, 'LIKE', "%$searchValue%");
         }
@@ -85,7 +85,7 @@ class TCartLineController extends Controller
             'flag_active' => 'required',
             'status' => 'required',
             'flag_chekced' => 'required',
-            'date_chekin' => 'nullable',
+            'date_checkin' => 'nullable',
             'user_id' => 'required|exists:m_users,id'
         ]);
 
@@ -99,7 +99,7 @@ class TCartLineController extends Controller
                 'id_m_room' => $request->id_m_room,
                 'status' => $request->status,
                 'flag_chekced' => $request->flag_chekced,
-                'date_chekin' => $request->date_chekin,
+                'date_checkin' => $request->date_checkin,
                 'flag_active' => $request->flag_active,
                 'updated_by' => $request->user_id,
             ]);
@@ -119,7 +119,7 @@ class TCartLineController extends Controller
             'data.*.id' => 'required',
             'data.*status' => 'required',
             'data.*flag_chekced' => 'required',
-            'data.*date_chekin' => 'nullable',
+            'data.*date_checkin' => 'nullable',
             'user_id' => 'required|exists:m_users,id'
         ]);
 
@@ -133,7 +133,7 @@ class TCartLineController extends Controller
                 $updateData = TCartLine::find($dataUpdate['id'])->update([
                     'status' => $dataUpdate['status'],
                     'flag_chekced' => $dataUpdate['flag_chekced'],
-                    'date_chekin' => $dataUpdate['date_chekin'],
+                    'date_checkin' => $dataUpdate['date_checkin'],
                     'updated_by' => $request->user_id,
                 ]);
             }

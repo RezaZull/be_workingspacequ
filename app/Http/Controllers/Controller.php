@@ -17,9 +17,10 @@ abstract class Controller
         "M_Room_Type" => "9",
         "M_Room_Sensor" => "10",
         "H_Room_Price" => "11",
-        "`T_Booking`" => "12",
+        "T_Booking" => "12",
         "T_Booking_Line" => "13",
         "M_Feedback" => "14",
         "T_Cart_Line" => "15",
+        "M_Room_Image" => "16"
     ];
 }

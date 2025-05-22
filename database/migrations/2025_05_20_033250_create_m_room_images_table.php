@@ -10,13 +10,11 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('t_cart_lines', function (Blueprint $table) {
+        Schema::create('m_room_images', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_m_user');
+            $table->string('img_path');
             $table->unsignedBigInteger('id_m_room');
-            $table->enum('status', ['active', 'complete']);
-            $table->boolean("flag_chekced")->default(false);
-            $table->date('date_checkin')->nullable();
+
             $table->string("obj_type");
             $table->boolean("flag_active");
             $table->timestamps();
@@ -32,6 +30,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('t_cart_lines');
+        Schema::dropIfExists('m_room_images');
     }
 };

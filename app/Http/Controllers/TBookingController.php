@@ -88,40 +88,41 @@ class TBookingController extends Controller
         try {
             $tBooking = TBooking::create([
                 'id_m_user' => $request->user_id,
-                'grand_total' => 0,
+                'grandtotal' => '0',
                 'date_book' => Carbon::now(),
                 'payment_status' => 'pending',
+                'order_id' => '',
                 'flag_active' => true,
                 'obj_type' => $this->objTypes["T_Booking"],
                 'created_by' => $request->user_id,
             ]);
             $BookingLineData = [];
             $grandTotal = 0;
-            foreach ($request->all() as $data) {
-                $dataRoom = MRoom::find($data->id_m_room);
+            foreach ($request->data as $data) {
+                $dataRoom = MRoom::find($data['id_m_room']);
                 $grandTotal += $dataRoom->price;
                 $BookingLineData[] = [
-                    'id_t_booking' => $tBooking->id,
-                    'id_m_room' => $data->id_m_room,
-                    'date_cheking' => $data->date_cheking,
+                    'id_t_booking' => $tBooking['id'],
+                    'id_m_room' => $data['id_m_room'],
+                    'date_checkin' => $data['date_checkin'],
                     'book_code' => "",
                     'flag_active' => true,
                     'obj_type' => $this->objTypes["T_Booking_Line"],
                     'created_by' => $request->user_id,
                     'created_at' => Carbon::now(),
                 ];
-                $updateData = TCartLine::find($data['id'])->update([
+                $updateData = TCartLine::find($data['id'])->first()->update([
                     'status' => 'complete',
                     'updated_by' => $request->user_id,
                 ]);
             }
             $tBookingLine = TBookingLine::insert($BookingLineData);
             $tBooking->update([
-                'grand_total' => $grandTotal
+                'grandtotal' => $grandTotal
             ]);
 
             DB::commit();
-            return ResponsHelper::successChangeData($tBookingLine, "Success create Data");
+            return ResponsHelper::successChangeData($tBooking, "Success create Data");
         } catch (\Throwable $th) {
             DB::rollBack();
             return ResponsHelper::conflictError(409, "Conflict error");
@@ -132,7 +133,7 @@ class TBookingController extends Controller
      */
     public function show(TBooking $tBooking)
     {
-        return ResponsHelper::successGetData($tBooking);
+        return ResponsHelper::successGetData($tBooking->load('user'));
     }
 
     /**

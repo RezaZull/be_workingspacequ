@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class TBooking extends Model
@@ -12,6 +13,8 @@ class TBooking extends Model
         "id_m_user",
         "payment_status",
         "date_book",
+        "grandtotal",
+        "order_id",
         'obj_type',
         'created_by',
         'updated_by',
@@ -27,4 +30,8 @@ class TBooking extends Model
         "updated_by",
         "deleted_by",
     ];
+    public function user(): HasOne
+    {
+        return $this->hasOne(MUser::class, 'id', 'id_m_user');
+    }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helper\ResponsHelper;
 use App\Models\TBookingLine;
+use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;
 use Validator;
@@ -21,7 +22,7 @@ class TBookingLineController extends Controller
         $orderDir = $request->query('orderDir');
 
         $pagination = $request->query('pagination');
-        $TBookingLine = new TBookingLine();
+        $TBookingLine = TBookingLine::with('room.roomType');
         if (isset($searchParam) && isset($searchValue)) {
             $TBookingLine = $TBookingLine->where($searchParam, 'LIKE', "%$searchValue%");
         }
@@ -41,7 +42,7 @@ class TBookingLineController extends Controller
         $validator = Validator::make($request->all(), [
             'id_t_booking' => 'required|exists:t_bookings,id',
             'id_m_room' => 'required|exists:m_rooms,id',
-            'date_cheking' => 'required',
+            'date_checking' => 'required',
             'flag_active' => 'required',
             'user_id' => 'required|exists:m_users,id'
         ]);
@@ -54,7 +55,7 @@ class TBookingLineController extends Controller
             $tBookingLine = TBookingLine::create([
                 'id_t_booking' => $request->id_t_booking,
                 'id_m_room' => $request->id_m_room,
-                'date_cheking' => $request->date_cheking,
+                'date_checking' => $request->date_checking,
                 'flag_active' => $request->flag_active,
                 'obj_type' => $this->objTypes["T_Booking_Line"],
                 'created_by' => $request->user_id,
@@ -69,6 +70,23 @@ class TBookingLineController extends Controller
         }
     }
 
+    public function checkBookId(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'book_code' => 'required|exists:t_booking_lines,book_code|min_digits:6|max_digits:6',
+        ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'data' => $validator->errors(),
+                'access' => false
+            ]);
+        }
+        $TBookLine = TBookingLine::where('book_code', '=', $request->book_code)->whereDate('date_checkin', Carbon::now())->count();
+        return response()->json([
+            'data' => $TBookLine < 1,
+            'access' => true
+        ]);
+    }
     /**
      * Display the specified resource.
      */
@@ -85,7 +103,7 @@ class TBookingLineController extends Controller
         $validator = Validator::make($request->all(), [
             'id_t_booking' => 'required|exists:t_bookings,id',
             'id_m_room' => 'required|exists:m_rooms,id',
-            'date_cheking' => 'required',
+            'date_checking' => 'required',
             'flag_active' => 'required',
             'user_id' => 'required|exists:m_users,id'
         ]);
@@ -98,7 +116,7 @@ class TBookingLineController extends Controller
             $tBookingLine = $tBookingLine->updateOrFail([
                 'id_t_booking' => $request->id_t_booking,
                 'id_m_room' => $request->id_m_room,
-                'date_cheking' => $request->date_cheking,
+                'date_checking' => $request->date_checking,
                 'flag_active' => $request->flag_active,
                 'updated_by' => $request->user_id,
             ]);
@@ -135,5 +153,19 @@ class TBookingLineController extends Controller
         }
         DB::rollBack();
         return ResponsHelper::conflictError(409, "cant delete data");
+    }
+
+
+    public function getAllBookingLineByUser(Request $request)
+    {
+        $validator = Validator($request->all(), [
+            'user_id' => 'required|exist:m_users,id'
+        ]);
+        $roomBook = TBookingLine::with([
+            'room',
+            'bookingHeader' => function ($query) use ($request) {
+                $query->where('id_m_user', $request->user_id);
+            }
+        ])->where('book_code', '!=', "")->orderBy('date_checkin', 'desc');
     }
 }
