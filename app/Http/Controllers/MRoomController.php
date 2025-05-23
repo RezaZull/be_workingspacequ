@@ -23,7 +23,7 @@ class MRoomController extends Controller
         $orderDir = $request->query('orderDir');
 
         $pagination = $request->query('pagination');
-        $MRoom = MRoom::with('roomType');
+        $MRoom = MRoom::with(['roomType', 'roomImage']);
         if (isset($searchParam) && isset($searchValue)) {
             $MRoom = $MRoom->where($searchParam, 'LIKE', "%$searchValue%");
         }

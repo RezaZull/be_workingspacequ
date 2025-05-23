@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helper\ResponsHelper;
+use App\Models\MUser;
 use App\Models\TBookingLine;
 use Carbon\Carbon;
 use DB;
@@ -156,16 +157,15 @@ class TBookingLineController extends Controller
     }
 
 
-    public function getAllBookingLineByUser(Request $request)
+    public function getAllBookingLineByUser(MUser $mUser)
     {
-        $validator = Validator($request->all(), [
-            'user_id' => 'required|exist:m_users,id'
-        ]);
         $roomBook = TBookingLine::with([
-            'room',
-            'bookingHeader' => function ($query) use ($request) {
-                $query->where('id_m_user', $request->user_id);
+            'room.roomImage',
+            'room.roomType',
+            'bookingHeader' => function ($query) use ($mUser) {
+                $query->where('id_m_user', $mUser->id);
             }
-        ])->where('book_code', '!=', "")->orderBy('date_checkin', 'desc');
+        ])->where('book_code', '!=', "")->orderBy('date_checkin', 'desc')->get();
+        return ResponsHelper::successGetData($roomBook);
     }
 }

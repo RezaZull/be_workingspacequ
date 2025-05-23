@@ -70,6 +70,22 @@ class MMenuGroupSeeder extends Seeder
                 'created_by' => "SYSTEM",
                 'created_at' => Carbon::now()
             ],
+            [//7
+                'id_m_roles' => 1,
+                'name' => "Feedback",
+                'obj_type' => '3',
+                'flag_active' => true,
+                'created_by' => "SYSTEM",
+                'created_at' => Carbon::now()
+            ],
+            [//8
+                'id_m_roles' => 1,
+                'name' => "History",
+                'obj_type' => '3',
+                'flag_active' => true,
+                'created_by' => "SYSTEM",
+                'created_at' => Carbon::now()
+            ],
         ]);
     }
 }

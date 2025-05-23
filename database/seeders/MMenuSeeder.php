@@ -141,6 +141,15 @@ class MMenuSeeder extends Seeder
                 'flag_active' => true,
                 'created_at' => Carbon::now()
             ],
+            [//15
+                'name' => "History",
+                'route' => "history",
+                'description' => "History",
+                'obj_type' => '1',
+                'created_by' => "SYSTEM",
+                'flag_active' => true,
+                'created_at' => Carbon::now()
+            ],
         ]);
     }
 }

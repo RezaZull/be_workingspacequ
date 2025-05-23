@@ -30,6 +30,7 @@ Route::post("/register", [MUserController::class, "register"])->name("register")
 Route::post("/login", [MUserController::class, "login"])->name("login");
 Route::post("/checkBookId", [TBookingLineController::class, "checkBookId"])->name("checkBookId");
 Route::middleware([JwtMiddleware::class])->group(function () {
+    Route::get("/booking/{mUser}", [TBookingLineController::class, "getAllBookingLineByUser"])->name("mRoomImage.getAllBookingLineByUser");
     Route::get("/mRoomImage", [MRoomImageController::class, "index"])->name("mRoomImage.index");
     Route::post("/midtrans/createPayment", [PaymentController::class, "createCharge"])->name("midtrans.createPayment");
     Route::post("/midtrans/setBookCode", [PaymentController::class, "setBookCode"])->name("midtrans.setBookCode");
