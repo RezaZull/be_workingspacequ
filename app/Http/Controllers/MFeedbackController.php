@@ -41,8 +41,7 @@ class MFeedbackController extends Controller
         $validator = Validator::make($request->all(), [
             'rating' => 'required',
             'feedback' => 'required',
-            'id_t_booking' => 'required|exists:t_booking,id',
-            'flag_active' => 'required',
+            'id_t_booking' => 'required|exists:t_bookings,id',
             'user_id' => 'required|exists:m_users,id'
         ]);
 
@@ -55,7 +54,7 @@ class MFeedbackController extends Controller
                 'rating' => $request->rating,
                 'feedback' => $request->feedback,
                 'id_t_booking' => $request->id_t_booking,
-                'flag_active' => $request->flag_active,
+                'flag_active' => true,
                 'obj_type' => $this->objTypes["M_Feedback"],
                 'created_by' => $request->user_id,
             ]);
@@ -85,7 +84,7 @@ class MFeedbackController extends Controller
         $validator = Validator::make($request->all(), [
             'rating' => 'required',
             'feedback' => 'required',
-            'id_t_booking' => 'required|exists:t_booking,id',
+            'id_t_booking' => 'required|exists:t_bookings,id',
             'flag_active' => 'required',
             'user_id' => 'required|exists:m_users,id'
         ]);

@@ -23,7 +23,7 @@ class TBookingLineController extends Controller
         $orderDir = $request->query('orderDir');
 
         $pagination = $request->query('pagination');
-        $TBookingLine = TBookingLine::with('room.roomType');
+        $TBookingLine = TBookingLine::with(['room.roomType', 'room.roomImage']);
         if (isset($searchParam) && isset($searchValue)) {
             $TBookingLine = $TBookingLine->where($searchParam, 'LIKE', "%$searchValue%");
         }

@@ -21,7 +21,7 @@ class TCartLineController extends Controller
         $orderDir = $request->query('orderDir');
 
         $pagination = $request->query('pagination');
-        $TCartLine = TCartLine::with('room.roomType')->where('status', '=', 'active');
+        $TCartLine = TCartLine::with(['room.roomType', 'room.roomImage'])->where('status', '=', 'active');
         if (isset($searchParam) && isset($searchValue)) {
             $TCartLine = $TCartLine->where($searchParam, 'LIKE', "%$searchValue%");
         }

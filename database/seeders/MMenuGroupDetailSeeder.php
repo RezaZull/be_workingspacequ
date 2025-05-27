@@ -22,7 +22,6 @@ class MMenuGroupDetailSeeder extends Seeder
             'productList' => [11],
             'cart' => [12],
             'booking' => [13],
-            'feedback' => [14],
             'history' => [15],
         ];
         $keysDataMenuList = array_keys($dataMenuList);

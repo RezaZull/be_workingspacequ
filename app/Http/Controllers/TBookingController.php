@@ -111,7 +111,7 @@ class TBookingController extends Controller
                     'created_by' => $request->user_id,
                     'created_at' => Carbon::now(),
                 ];
-                $updateData = TCartLine::find($data['id'])->first()->update([
+                $updateData = TCartLine::find($data['id'])->update([
                     'status' => 'complete',
                     'updated_by' => $request->user_id,
                 ]);

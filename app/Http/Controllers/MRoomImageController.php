@@ -73,7 +73,7 @@ class MRoomImageController extends Controller
             ]);
         }
         $webp = Webp::make($request->file('img_file'));
-        $newPath = "storage/images/profile/" . $request->file('img_file')->hashName() . ".webp";
+        $newPath = "storage/images/room/" . $request->file('img_file')->hashName() . ".webp";
         if ($webp->save(public_path($newPath))) {
             $MRoomImage = MRoomImage::create([
                 'img_path' => $newPath,
