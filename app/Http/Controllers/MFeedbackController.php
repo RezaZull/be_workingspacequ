@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helper\ResponsHelper;
 use App\Models\MFeedback;
 use DB;
+use Http;
 use Illuminate\Http\Request;
 use Validator;
 
@@ -21,7 +22,7 @@ class MFeedbackController extends Controller
         $orderDir = $request->query('orderDir');
 
         $pagination = $request->query('pagination');
-        $MFeedback = new MFeedback();
+        $MFeedback = MFeedback::with('room');
         if (isset($searchParam) && isset($searchValue)) {
             $MFeedback = $MFeedback->where($searchParam, 'LIKE', "%$searchValue%");
         }
@@ -42,6 +43,7 @@ class MFeedbackController extends Controller
             'rating' => 'required',
             'feedback' => 'required',
             'id_t_booking' => 'required|exists:t_bookings,id',
+            'id_m_room' => 'required|exists:m_rooms,id',
             'user_id' => 'required|exists:m_users,id'
         ]);
 
@@ -50,15 +52,23 @@ class MFeedbackController extends Controller
         }
         DB::beginTransaction();
         try {
-            $mFeedback = MFeedback::create([
-                'rating' => $request->rating,
-                'feedback' => $request->feedback,
-                'id_t_booking' => $request->id_t_booking,
-                'flag_active' => true,
-                'obj_type' => $this->objTypes["M_Feedback"],
-                'created_by' => $request->user_id,
-            ]);
-            DB::commit();
+            $response = Http::post('http://127.0.0.1:5000/feedback', ['feedback' => $request->feedback]);
+            if ($response->successful()) {
+                $mFeedback = MFeedback::create([
+                    'rating' => $request->rating,
+                    'feedback' => $request->feedback,
+                    'id_t_booking' => $request->id_t_booking,
+                    'id_m_room' => $request->id_m_room,
+                    'flag_positif_feedback' => $response->object()->label,
+                    'flag_active' => true,
+                    'obj_type' => $this->objTypes["M_Feedback"],
+                    'created_by' => $request->user_id,
+                ]);
+                DB::commit();
+            } else {
+                DB::rollBack();
+                return ResponsHelper::conflictError(409, "Server Error");
+            }
         } catch (\Throwable $th) {
             DB::rollBack();
             return ResponsHelper::conflictError(409, "Conflict error");
@@ -85,7 +95,7 @@ class MFeedbackController extends Controller
             'rating' => 'required',
             'feedback' => 'required',
             'id_t_booking' => 'required|exists:t_bookings,id',
-            'flag_active' => 'required',
+            'id_m_room' => 'required|exists:m_rooms,id',
             'user_id' => 'required|exists:m_users,id'
         ]);
 
@@ -94,14 +104,19 @@ class MFeedbackController extends Controller
         }
         DB::beginTransaction();
         try {
-            $mFeedback = $mFeedback->updateOrFail([
-                'rating' => $request->rating,
-                'feedback' => $request->feedback,
-                'id_t_booking' => $request->id_t_booking,
-                'flag_active' => $request->flag_active,
-                'updated_by' => $request->user_id,
-            ]);
-            DB::commit();
+            $response = Http::post('http://127.0.0.1:5000/feedback', ['feedback' => $request->feedback]);
+            if ($response->successful()) {
+                $mFeedback = $mFeedback->updateOrFail([
+                    'rating' => $request->rating,
+                    'feedback' => $request->feedback,
+                    'id_t_booking' => $request->id_t_booking,
+                    'flag_active' => $request->flag_active,
+                    'id_m_room' => $request->id_m_room,
+                    'flag_positif_feedback' => $response->object()->label,
+                    'updated_by' => $request->user_id,
+                ]);
+                DB::commit();
+            }
         } catch (\Throwable $th) {
             DB::rollBack();
             return ResponsHelper::conflictError(409, "Conflict error");

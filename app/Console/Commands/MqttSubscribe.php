@@ -36,7 +36,7 @@ class MqttSubscribe extends Command
                     'updated_by' => 'IOT Devices'
                 ]);
             }
-            echo "Successfully Update data";
+            echo "Successfully Update data\n";
         });
 
         $mqtt->loop(true);

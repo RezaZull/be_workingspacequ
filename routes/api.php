@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AppSettingController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HRoomPriceController;
 use App\Http\Controllers\MFeedbackController;
 use App\Http\Controllers\MMenuController;
@@ -30,6 +31,7 @@ Route::post("/register", [MUserController::class, "register"])->name("register")
 Route::post("/login", [MUserController::class, "login"])->name("login");
 Route::post("/checkBookId", [TBookingLineController::class, "checkBookId"])->name("checkBookId");
 Route::middleware([JwtMiddleware::class])->group(function () {
+    Route::post("/dashboard", [DashboardController::class, "getDashboardData"])->name("getDashboardData");
     Route::get("/booking/{mUser}", [TBookingLineController::class, "getAllBookingLineByUser"])->name("mRoomImage.getAllBookingLineByUser");
     Route::get("/mRoomImage", [MRoomImageController::class, "index"])->name("mRoomImage.index");
     Route::post("/midtrans/createPayment", [PaymentController::class, "createCharge"])->name("midtrans.createPayment");

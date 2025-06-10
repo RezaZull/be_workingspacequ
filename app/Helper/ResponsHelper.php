@@ -11,7 +11,7 @@ class ResponsHelper
     public static function successGetData($data, $message = "Successfully get data"): JsonResponse
     {
         $token = JWTAuth::getToken();
-        $token = JWTAuth::refresh($token);
+        // $token = JWTAuth::refresh($token);
         return response()->json(
             [
                 'status' => 200,
@@ -30,7 +30,7 @@ class ResponsHelper
     public static function successChangeData($data, $message = "Successfully change data"): JsonResponse
     {
         $token = JWTAuth::getToken();
-        $token = JWTAuth::refresh($token);
+        // $token = JWTAuth::refresh($token);
         return response()->json(
             [
                 'status' => 201,
@@ -49,7 +49,7 @@ class ResponsHelper
     public static function validatorError($error, $message = "Validator Error"): JsonResponse
     {
         $token = JWTAuth::getToken();
-        $token = JWTAuth::refresh($token);
+        // $token = JWTAuth::refresh($token);
         return response()->json(
             [
                 'status' => 442,
@@ -68,7 +68,7 @@ class ResponsHelper
     public static function conflictError($error, $message = "Conflict Error"): JsonResponse
     {
         $token = JWTAuth::getToken();
-        $token = JWTAuth::refresh($token);
+        // $token = JWTAuth::refresh($token);
         return response()->json(
             [
                 'status' => 409,
