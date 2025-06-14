@@ -14,6 +14,7 @@ class MMenuGroupSeeder extends Seeder
     public function run(): void
     {
         MMenuGroup::insert([
+            //ADMIN
             [//1
                 'id_m_roles' => 1,
                 'name' => "Dashboard",
@@ -73,6 +74,55 @@ class MMenuGroupSeeder extends Seeder
             [//7
                 'id_m_roles' => 1,
                 'name' => "History",
+                'obj_type' => '3',
+                'flag_active' => true,
+                'created_by' => "SYSTEM",
+                'created_at' => Carbon::now()
+            ],
+            //USER
+            [//8
+                'id_m_roles' => 2,
+                'name' => "Dashboard",
+                'obj_type' => '3',
+                'flag_active' => true,
+                'created_by' => "SYSTEM",
+                'created_at' => Carbon::now()
+            ],
+            [//9
+                'id_m_roles' => 2,
+                'name' => "Product List",
+                'obj_type' => '3',
+                'flag_active' => true,
+                'created_by' => "SYSTEM",
+                'created_at' => Carbon::now()
+            ],
+            [//10
+                'id_m_roles' => 2,
+                'name' => "Cart",
+                'obj_type' => '3',
+                'flag_active' => true,
+                'created_by' => "SYSTEM",
+                'created_at' => Carbon::now()
+            ],
+            [//11
+                'id_m_roles' => 2,
+                'name' => "Booking",
+                'obj_type' => '3',
+                'flag_active' => true,
+                'created_by' => "SYSTEM",
+                'created_at' => Carbon::now()
+            ],
+            [//12
+                'id_m_roles' => 2,
+                'name' => "History",
+                'obj_type' => '3',
+                'flag_active' => true,
+                'created_by' => "SYSTEM",
+                'created_at' => Carbon::now()
+            ],
+            [//13
+                'id_m_roles' => 2,
+                'name' => "Product",
                 'obj_type' => '3',
                 'flag_active' => true,
                 'created_by' => "SYSTEM",

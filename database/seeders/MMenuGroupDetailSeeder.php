@@ -15,6 +15,7 @@ class MMenuGroupDetailSeeder extends Seeder
     {
         // $DataMenu = MMenu::get();
         $dataMenuList = [
+            //admin
             'dashboard' => [1],
             'userRolePermission' => [2, 3, 4, 5, 6],
             'masterSensor' => [7, 8],
@@ -23,6 +24,12 @@ class MMenuGroupDetailSeeder extends Seeder
             'cart' => [12],
             'booking' => [13],
             'history' => [15],
+            //user
+            'dashboardUser' => [1],
+            'productListUser' => [11],
+            'cartUser' => [12],
+            'bookingUser' => [13],
+            'historyUser' => [15],
         ];
         $keysDataMenuList = array_keys($dataMenuList);
         $GrupDetailCreate = [];
@@ -44,6 +51,20 @@ class MMenuGroupDetailSeeder extends Seeder
                 ];
             }
         }
+        $GrupDetailCreate[] = [
+            'id_m_menu_groups' => 14,
+            'id_m_menus' => 9,
+            'flag_create' => false,
+            'flag_read' => true,
+            'flag_update' => false,
+            'flag_delete' => false,
+            'flag_export' => true,
+            'flag_import' => true,
+            'flag_active' => true,
+            'created_by' => 'SYSTEM',
+            'obj_type' => '4',
+            'created_at' => Carbon::now()
+        ];
         MMenuGroupDetail::insert($GrupDetailCreate);
     }
 }

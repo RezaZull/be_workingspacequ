@@ -27,6 +27,18 @@ class MUserSeeder extends Seeder
                 'img_path' => "storage/images/profile/images.webp",
                 'flag_active' => true,
             ],
+            [
+                'first_name' => 'user',
+                'last_name' => 'baek',
+                'username' => 'user',
+                'email' => 'user@example.com',
+                'password' => Hash::make('user'),
+                'id_m_roles' => 2,
+                'obj_type' => 5,
+                'created_by' => "SYSTEM",
+                'img_path' => "storage/images/profile/images.webp",
+                'flag_active' => true,
+            ],
         ]);
     }
 }

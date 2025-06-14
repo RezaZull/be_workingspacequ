@@ -73,10 +73,21 @@ class DashboardController extends Controller
                     'year' => $now->year,
                     'label' => $label_date,
                     'data' => $categoryList
-                ]
+                ],
+                'last_feedback' => MFeedback::with('room')->orderBy('created_at', 'desc')->limit(5)->get(),
+
             ];
         } else {
-            $data = "wow";
+            $data = [
+                'card_data' => [
+                    'pending_moth' => TBooking::whereMonth('date_book', $now->month)->where([['payment_status', '=', 'pending'], ['id_m_user', '=', $request->user_id]])->count(),
+                    'pending_all' => TBooking::where([['payment_status', '=', 'pending'], ['id_m_user', '=', $request->user_id]])->count(),
+                    'success_month' => TBooking::whereMonth('date_book', $now->month)->where([['payment_status', '=', 'success'], ['id_m_user', '=', $request->user_id]])->count(),
+                    'success_all' => TBooking::where([['payment_status', '=', 'success'], ['id_m_user', '=', $request->user_id]])->count(),
+                ],
+                'last_history' => TBooking::where('id_m_user', '=', $request->user_id)->orderBy('created_at', 'desc')->limit(5)->get(),
+                'last_feedback' => MFeedback::with('room')->where('created_by', '=', $request->user_id)->orderBy('created_at', 'desc')->limit(5)->get(),
+            ];
         }
         return ResponsHelper::successGetData($data);
     }
