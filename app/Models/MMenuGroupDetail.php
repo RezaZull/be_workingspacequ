@@ -16,8 +16,6 @@ class MMenuGroupDetail extends Model
         'flag_read',
         'flag_update',
         'flag_delete',
-        'flag_export',
-        'flag_import',
         'obj_type',
         'created_by',
         'updated_by',

@@ -32,7 +32,7 @@ class PaymentController extends Controller
         if ($validator->fails()) {
             return ResponsHelper::validatorError($validator->errors());
         }
-        $order_id = rand();
+        $order_id = rand(0, 9999999999);
         $params = [
             'transaction_details' => [
                 'order_id' => $order_id,

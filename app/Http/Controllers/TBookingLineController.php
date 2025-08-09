@@ -75,6 +75,7 @@ class TBookingLineController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'book_code' => 'required|exists:t_booking_lines,book_code|min_digits:6|max_digits:6',
+            'id_room' => 'required|exists:m_rooms,id'
         ]);
         if ($validator->fails()) {
             return response()->json([
@@ -82,10 +83,13 @@ class TBookingLineController extends Controller
                 'access' => false
             ]);
         }
-        $TBookLine = TBookingLine::where('book_code', '=', $request->book_code)->whereDate('date_checkin', Carbon::now())->count();
+        $TBookLine = TBookingLine::where('book_code', $request->book_code)
+            ->where('id_m_room', $request->id_room)
+            ->whereDate('date_checkin', Carbon::today())
+            ->count();
+        // dd($TBookLine);
         return response()->json([
-            'data' => $TBookLine < 1,
-            'access' => true
+            'access' => $TBookLine > 0
         ]);
     }
     /**
@@ -162,10 +166,15 @@ class TBookingLineController extends Controller
         $roomBook = TBookingLine::with([
             'room.roomImage',
             'room.roomType',
-            'bookingHeader' => function ($query) use ($mUser) {
+            'bookingHeader'
+        ])
+            ->whereHas('bookingHeader', function ($query) use ($mUser) {
                 $query->where('id_m_user', $mUser->id);
-            }
-        ])->where('book_code', '!=', "")->orderBy('date_checkin', 'desc')->get();
+            })
+            ->where('book_code', '!=', "")
+            ->orderBy('date_checkin', 'desc')
+            ->get();
+
         return ResponsHelper::successGetData($roomBook);
     }
 }

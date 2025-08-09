@@ -18,8 +18,6 @@ return new class extends Migration {
             $table->boolean("flag_read");
             $table->boolean("flag_update");
             $table->boolean("flag_delete");
-            $table->boolean("flag_export");
-            $table->boolean("flag_import");
 
             $table->string("obj_type");
             $table->boolean("flag_active");

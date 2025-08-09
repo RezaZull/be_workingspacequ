@@ -99,8 +99,13 @@ class TBookingController extends Controller
             $BookingLineData = [];
             $grandTotal = 0;
             foreach ($request->data as $data) {
-                $dataRoom = MRoom::find($data['id_m_room']);
+                $dataRoom = MRoom::with('roomType')->find($data['id_m_room']);
                 $grandTotal += $dataRoom->price;
+                $checkBookingLine = TBookingLine::where([['id_m_room', '=', $data['id_m_room']], ['date_checkin', '=', $data['date_checkin']]])->count() >= $dataRoom->roomType->max_capacity;
+                if ($checkBookingLine) {
+                    DB::rollBack();
+                    return ResponsHelper::conflictError(409, "room $dataRoom->name, is max capacity");
+                }
                 $BookingLineData[] = [
                     'id_t_booking' => $tBooking['id'],
                     'id_m_room' => $data['id_m_room'],

@@ -12,10 +12,10 @@ return new class extends Migration {
     {
         Schema::create('m_users', function (Blueprint $table) {
             $table->id();
-            $table->string("first_name");
-            $table->string("last_name");
-            $table->string("username");
-            $table->string("email");
+            $table->string("first_name", 30);
+            $table->string("last_name", 30);
+            $table->string("username", 30);
+            $table->string("email", 50);
             $table->string("password");
             $table->unsignedBigInteger("id_m_roles");
             $table->string("img_path");

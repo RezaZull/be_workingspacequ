@@ -44,7 +44,6 @@ class MRoomController extends Controller
             'name' => 'required',
             'id_m_room_type' => 'required|exists:m_room_types,id',
             'price' => 'required',
-            'current_capacity' => 'required',
             'flag_active' => 'required',
             'user_id' => 'required|exists:m_users,id'
         ]);
@@ -62,7 +61,6 @@ class MRoomController extends Controller
                 'name' => $request->name,
                 'id_m_room_type' => $request->id_m_room_type,
                 'price' => $request->price,
-                'current_capacity' => $request->current_capacity,
                 'obj_type' => $this->objTypes["M_Room"],
                 'flag_active' => $request->flag_active,
                 'created_by' => $request->user_id,
@@ -103,7 +101,6 @@ class MRoomController extends Controller
             'name' => 'required',
             'id_m_room_type' => 'required|exists:m_room_types,id',
             'price' => 'required',
-            'current_capacity' => 'required',
             'flag_active' => 'required',
             'user_id' => 'required|exists:m_users,id'
         ]);
@@ -121,7 +118,6 @@ class MRoomController extends Controller
                 'name' => $request->name,
                 'id_m_room_type' => $request->id_m_room_type,
                 'price' => $request->price,
-                'current_capacity' => $request->current_capacity,
                 'flag_active' => $request->flag_active,
                 'updated_by' => $request->user_id,
             ]);

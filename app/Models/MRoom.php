@@ -14,7 +14,6 @@ class MRoom extends Model
         'name',
         'id_m_room_type',
         'price',
-        'current_capacity',
         'obj_type',
         'created_by',
         'updated_by',

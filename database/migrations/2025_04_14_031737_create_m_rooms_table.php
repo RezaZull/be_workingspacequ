@@ -15,7 +15,6 @@ return new class extends Migration {
             $table->unsignedBigInteger('id_m_room_type');
             $table->string('name');
             $table->decimal('price', 12, 2);
-            $table->unsignedTinyInteger('current_capacity');
 
             $table->string("obj_type");
             $table->boolean("flag_active");
