@@ -52,7 +52,7 @@ class MFeedbackController extends Controller
         }
         DB::beginTransaction();
         try {
-            $response = Http::post('http://127.0.0.1:5000/feedback', ['feedback' => $request->feedback]);
+            $response = Http::post(env('SENTIMEN_ANALIS_ENDPOINT', 'http://127.0.0.1:5000/feedback'), ['feedback' => $request->feedback]);
             if ($response->successful()) {
                 $mFeedback = MFeedback::create([
                     'rating' => $request->rating,
